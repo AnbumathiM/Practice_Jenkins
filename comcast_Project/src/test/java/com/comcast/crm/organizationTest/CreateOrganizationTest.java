@@ -42,5 +42,30 @@ public class CreateOrganizationTest extends BaseClass {
 	  UtilityClassObject.getTest().log(Status.INFO,orgName+" Organization successfully created"); 
 	 System.out.println(orgName+" Organization successfully created");
 	  }
+	  
+	  @Test(groups = "Regression Testing")
+		public void CreateOrganizationWithIndustryTest() throws Throwable {
+
+			HomePage hp = new HomePage(driver);
+			hp.getOrgLink().click();
+
+			OrganizationPage op = new OrganizationPage(driver);
+			op.getCreateOrgLookUpImg().click();
+
+			String orgName = elib.getDataFromExcelFile("org", 4, 2) + jlib.getRandomNumber();
+			UtilityClassObject.getTest().log(Status.INFO,orgName);
+			String industry = elib.getDataFromExcelFile("org", 4, 3);
+
+			CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
+			cnop.createOrgwithIndustry(orgName, industry);
+			OrganizationInfoPage oip=new OrganizationInfoPage(driver); 
+			String actIndustry = oip.getIndustryDropDownText().getText();
+			boolean status = actIndustry.equals(industry);
+			SoftAssert Sassert=new SoftAssert();
+			Sassert.assertTrue(status);
+			UtilityClassObject.getTest().log(Status.INFO,industry + "information is verified==PASS");
+			System.out.println(industry + "information is verified==PASS");
+				Sassert.assertAll();
+			} 
 	 
 }

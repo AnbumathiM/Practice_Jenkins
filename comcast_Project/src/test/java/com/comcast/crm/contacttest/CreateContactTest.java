@@ -71,8 +71,41 @@ public class CreateContactTest extends BaseClass {
 			System.out.println(lastName + " information is verified==PASS");
 			
 			assertobj.assertAll();
+	}
+	@Test(groups = "Regression Testing")
+	public void createContactWithSupportDateTest() throws Throwable {
+
+		String lastName = elib.getDataFromExcelFile("contact", 1, 2) + jlib.getRandomNumber();
+
+		HomePage hp = new HomePage(driver);
+		hp.getContactLink().click();
+		ContactPage cp = new ContactPage(driver);
+		cp.getCreateOrgLookUpImg().click();
+
+		String StartDate = jlib.getSystemDateYYYYMMDD();
+		String EndDate = jlib.getSystemDateYYYYMMDD(30);
+		CreateNewContactPage ccp = new CreateNewContactPage(driver);
+		ccp.createContactWithSupportDate(lastName, StartDate, EndDate);
+		ContactInfoPage cip=new ContactInfoPage(driver);
+		
+		String actualdate = cip.getActualstartdate().getText();
+
+		boolean status = actualdate.equals(StartDate);
+			SoftAssert assertobj=new SoftAssert();
+		assertobj.assertTrue(status);
+		
+			System.out.println(actualdate + " information is verified==PASS");
+		
 		
 
+		String actualenddate = cip.getActualenddate().getText();
+
+		boolean status2=actualenddate.equals(EndDate);
+		assertobj.assertTrue(status);
+			System.out.println(EndDate + " information is verified==PASS");
+			
+
+			assertobj.assertAll();
 	}
 
 }

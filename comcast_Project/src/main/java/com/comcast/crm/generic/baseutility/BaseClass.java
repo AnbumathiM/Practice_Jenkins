@@ -53,11 +53,10 @@ public class BaseClass {
 	@BeforeClass(groups = {"Smoke Testing","Regression Testing"})
 	
 	public void configBC() throws Throwable {
-		String BROWSER=flib.getDataFromPropertyFile("browser");
+		//String BROWSER1=flib.getDataFromPropertyFile("browser");
 		
 		//to pass parameter in run time
-		//String BROWSER=System.getProperty("browser");
-	
+	String BROWSER=System.getProperty("browser",flib.getDataFromPropertyFile("browser"));
 	//only for cross browser execution
 	//public void configBC(String browser) {
 		//String BROWSER=browser;
@@ -89,14 +88,15 @@ public class BaseClass {
 		
 		//to pass parameter in run time
 		
-		//String URL = System.getProperty("url");
-		//String USERNAME=System.getProperty("username");
-	//	String PASSWORD=System.getProperty("password");
+		String URL = System.getProperty("url",flib.getDataFromPropertyFile("url"));
+		String USERNAME=System.getProperty("username",flib.getDataFromPropertyFile("username"));
+		String PASSWORD=System.getProperty("password",flib.getDataFromPropertyFile("password"));
 		
-		
-		String URL = flib.getDataFromPropertyFile("url");
-		String USERNAME=flib.getDataFromPropertyFile("username");
-		String PASSWORD=flib.getDataFromPropertyFile("password");
+		/*
+		String URL1 = flib.getDataFromPropertyFile("url");
+		String USERNAME1=flib.getDataFromPropertyFile("username");
+		String PASSWORD1=flib.getDataFromPropertyFile("password");
+		*/
 		driver.get(URL);
 		wlib.maximizeWindow(driver);
 		wlib.waitForPageToLoad(driver);
